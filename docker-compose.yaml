@@ -1,9 +1,0 @@
-version: '3'
-services:
-  golang:
-    build:
-      context: .
-      dockerfile: ./server/Dockerfile
-    volumes:
-      - ./server/:/app:delegated
-    tty: true
