@@ -1,4 +1,4 @@
-# LayeredArchSample
+# GCPsample
 NestJS + Prisma + React + Mysql の簡易アプリ
 
 # 開発環境
@@ -11,14 +11,8 @@ NestJS + Prisma + React + Mysql の簡易アプリ
 $ docker compose up -d
 ```
 
-# how to use prisma
-以下`docker compose exec server bash`の中で対応
-
-### migrate
+# デプロイ
 ```
-$ yarn prisma migrate dev --name init
-```
-### Admin
-```
-$ yarn prisma studio
+$ gcloud init
+$ gcloud builds submit --config cloudbuild.yaml 
 ```
