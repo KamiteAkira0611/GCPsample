@@ -1,7 +1,0 @@
-steps:
-  # Docker Build
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/front-image', '.' ]
-  # Docker Push
-  - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/front-image', '.' ]

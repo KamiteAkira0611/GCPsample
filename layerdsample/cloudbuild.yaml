@@ -5,6 +5,10 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: [ 'build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/server-image', '-f', './server/Dockerfile', './server' ]
 
-  # Docker Push
-  # - name: 'gcr.io/cloud-builders/docker'
-  #   args: [ 'build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/front-image', '.' ]
+  # Docker Push To Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/front-image' ]
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/server-image' ]
+
+  
