@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  front:
+    build:
+      context: ./front
+      dockerfile: Dockerfile.dev
+    platform: linux/amd64
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front/:/app:delegateds
+    tty: true
+    depends_on:
+      - server
+    command: > 
+      bash -c "yarn install && yarn dev"
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    platform: linux/amd64
+    ports:
+      - "5000:5000"
+      - "5555:5555"
+    volumes:
+      - ./server/:/app:delegateds
+    command: > 
+      bash -c "yarn install && 
+      yarn start:dev"
+    depends_on:
+      - mysql-db
+    
+  mysql-db:
+    image: mysql:5.7
+    restart: always
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: prisma
+    volumes:
+      - ./mysql/data:/var/lib/mysql
