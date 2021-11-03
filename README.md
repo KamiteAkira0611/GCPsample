@@ -15,7 +15,7 @@ $ docker compose up -d
 
 masterにpushするとCloudBuildが立ち上がり自動デプロイされます
 
-### local
+### ローカルテスト
 ```
 $ gcloud init
 $ gcloud builds submit --config cloudbuild.yaml 
