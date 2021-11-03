@@ -1,0 +1,37 @@
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+
+# ------- front -------
+# compiled output
+front/node_modules
+front/.pnp
+front/.pnp.js
+
+# testing
+front/coverage
+
+# production
+front/build
+
+# ------- server -------
+# compiled output
+server/dist
+server/node_modules
+
+# Logs
+server/logs
+server/*.log
+server/npm-debug.log*
+server/pnpm-debug.log*
+server/yarn-debug.log*
+server/yarn-error.log*
+server/lerna-debug.log*
+
+
+# ------- mysql -------
+mysql/data
