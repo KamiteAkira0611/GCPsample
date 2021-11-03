@@ -20,3 +20,4 @@ masterにpushするとCloudBuildが立ち上がり自動デプロイされます
 $ gcloud init
 $ gcloud builds submit --config cloudbuild.yaml 
 ```
+
