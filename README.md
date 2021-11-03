@@ -12,6 +12,10 @@ $ docker compose up -d
 ```
 
 # デプロイ
+
+masterにpushするとCloudBuildが立ち上がり自動デプロイされます
+
+### local
 ```
 $ gcloud init
 $ gcloud builds submit --config cloudbuild.yaml 
