@@ -1,4 +1,4 @@
-# GCPsample
+# GKEsample
 NestJS + Prisma + React + Mysql の簡易アプリ
 
 # 開発環境
