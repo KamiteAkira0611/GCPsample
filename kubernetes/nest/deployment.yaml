@@ -5,7 +5,7 @@ metadata:
   labels:
     app: nest
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: nest
@@ -16,27 +16,48 @@ spec:
     spec:
       containers:
         - name: nest
-          image: asia-northeast1-docker.pkg.dev/gke-sample-327813/layerdsample/server-image:latest
+          image: asia-northeast1-docker.pkg.dev/gke-sample-327813/layerdsample/nest-image:latest
+          tty: true
           env:
-          - name: NEST_DB_HOST
-            value: 127.0.0.1:3306
-          # These secrets are required to start the pod.
-          - name: NEST_DB_USER
-            valueFrom:
-              secretKeyRef:
-                name: cloudsql-db-credentials
-                key: username
-          - name: NEST_DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: cloudsql-db-credentials
-                key: password
+            - name: PRISMA_DATABASE_URL
+              value: mysql://layerd-mysql-user:QRiTlVsM8OZ6xlDqVeA51G4@127.0.0.1:3306/layerd_db_development?connect_timeout=300
+          # - name: NEST_DB_HOST
+          #   value: 127.0.0.1:3306
+          # # These secrets are required to start the pod.
+          # - name: NEST_DB_USER
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: cloudsql-db-credentials
+          #       key: username
+          # - name: NEST_DB_PASSWORD
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: cloudsql-db-credentials
+          #       key: password
           ports:
             - containerPort: 5000
+        - name: cloudsql-proxy
+          image: gcr.io/cloudsql-docker/gce-proxy:1.11
+          command: ["/cloud_sql_proxy",
+                    "-instances=gke-sample-327813:asia-northeast1:layerd-instance=tcp:3306",
+                    # If running on a VPC, the Cloud SQL proxy can connect via Private IP. See:
+                    # https://cloud.google.com/sql/docs/mysql/private-ip for more info.
+                    # "-ip_address_types=PRIVATE",
+                    "-credential_file=/secrets/cloudsql/cloudsql-account-key.json"]
+          securityContext:
+            runAsUser: 2  # non-root user
+            allowPrivilegeEscalation: false
           volumeMounts:
-            - name: nest-persistent-storage
-              mountPath: /app
+            - name: cloudsql-instance-credentials
+              mountPath: /secrets/cloudsql
+              readOnly: true
+      #     volumeMounts:
+      #       - name: nest-persistent-storage
+      #         mountPath: /app
       volumes:
-        - name: nest-persistent-storage
-          persistentVolumeClaim:
-            claimName: nest-volumeclaim
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+        # - name: nest-persistent-storage
+        #   persistentVolumeClaim:
+        #     claimName: nest-volumeclaim

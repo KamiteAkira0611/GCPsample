@@ -1,42 +1,42 @@
 version: '3'
 
 services:
-  front:
+  react:
     build:
-      context: ./front
+      context: ./react
       dockerfile: Dockerfile.dev
     platform: linux/amd64
     ports:
       - "3000:3000"
     volumes:
-      - ./front/:/app:delegateds
+      - ./react/:/app:delegateds
     tty: true
     depends_on:
-      - server
+      - nest
     command: > 
       bash -c "yarn install && yarn dev"
 
-  server:
+  nest:
     build:
-      context: ./server
+      context: ./nest
       dockerfile: Dockerfile
     platform: linux/amd64
     ports:
       - "5000:5000"
       - "5555:5555"
     volumes:
-      - ./server/:/app:delegateds
+      - ./nest/:/app:delegateds
     command: bash -c "
       yarn install &&
       yarn prisma migrate deploy && 
       yarn start:dev"
     environment:
-      PRISMA_DATABASE_URL: mysql://root:prisma@mysql-db:3306/mydb?connect_timeout=300
+      PRISMA_DATABASE_URL: mysql://root:prisma@mysql:3306/mydb?connect_timeout=300
     depends_on:
-      - mysql-db
+      - mysql
     tty: true
     
-  mysql-db:
+  mysql:
     image: mysql:5.7
     restart: always
     platform: linux/amd64

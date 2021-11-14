@@ -6,31 +6,31 @@
 !.vscode/extensions.json
 
 
-# ------- front -------
+# ------- react -------
 # compiled output
-front/node_modules
-front/.pnp
-front/.pnp.js
+react/node_modules
+react/.pnp
+react/.pnp.js
 
 # testing
-front/coverage
+react/coverage
 
 # production
-front/build
+react/build
 
-# ------- server -------
+# ------- nest -------
 # compiled output
-server/dist
-server/node_modules
+nest/dist
+nest/node_modules
 
 # Logs
-server/logs
-server/*.log
-server/npm-debug.log*
-server/pnpm-debug.log*
-server/yarn-debug.log*
-server/yarn-error.log*
-server/lerna-debug.log*
+nest/logs
+nest/*.log
+nest/npm-debug.log*
+nest/pnpm-debug.log*
+nest/yarn-debug.log*
+nest/yarn-error.log*
+nest/lerna-debug.log*
 
 
 # ------- mysql -------
