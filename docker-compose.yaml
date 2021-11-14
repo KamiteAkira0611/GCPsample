@@ -11,6 +11,8 @@ services:
     volumes:
       - ./react/:/app:delegateds
     tty: true
+    environment:
+      REACT_APP_API_URL: http://localhost:5000
     depends_on:
       - nest
     command: bash -c "yarn install && yarn dev"
