@@ -26,12 +26,15 @@ services:
       - "5555:5555"
     volumes:
       - ./server/:/app:delegateds
-    command: > 
-      bash -c "yarn install && yarn start:dev"
+    command: bash -c "
+      yarn install &&
+      yarn prisma migrate deploy && 
+      yarn start:dev"
     environment:
       PRISMA_DATABASE_URL: mysql://root:prisma@mysql-db:3306/mydb?connect_timeout=300
     depends_on:
       - mysql-db
+    tty: true
     
   mysql-db:
     image: mysql:5.7

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nest
-          image: asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/server-image
+          image: asia-northeast1-docker.pkg.dev/gke-sample-327813/layerdsample/server-image:latest
           env:
           - name: NEST_DB_HOST
             value: 127.0.0.1:3306
