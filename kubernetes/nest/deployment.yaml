@@ -19,21 +19,20 @@ spec:
           image: asia-northeast1-docker.pkg.dev/gke-sample-327813/layerdsample/nest-image:latest
           tty: true
           env:
-            - name: PRISMA_DATABASE_URL
-              value: mysql://layerd-mysql-user:QRiTlVsM8OZ6xlDqVeA51G4@127.0.0.1:3306/layerd_db_development?connect_timeout=300
-          # - name: NEST_DB_HOST
-          #   value: 127.0.0.1:3306
-          # # These secrets are required to start the pod.
-          # - name: NEST_DB_USER
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: cloudsql-db-credentials
-          #       key: username
-          # - name: NEST_DB_PASSWORD
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: cloudsql-db-credentials
-          #       key: password
+            - name: PRISMA_DATABASE_HOST
+              value: 127.0.0.1:3306
+            - name: PRISMA_DATABASE_NAME
+              value: layerd_db_development
+            - name: PRISMA_DATABASE_USER
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: username
+            - name: PRISMA_DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cloudsql-db-credentials
+                  key: password
           ports:
             - containerPort: 5000
         - name: cloudsql-proxy
@@ -51,13 +50,7 @@ spec:
             - name: cloudsql-instance-credentials
               mountPath: /secrets/cloudsql
               readOnly: true
-      #     volumeMounts:
-      #       - name: nest-persistent-storage
-      #         mountPath: /app
       volumes:
         - name: cloudsql-instance-credentials
           secret:
             secretName: cloudsql-instance-credentials
-        # - name: nest-persistent-storage
-        #   persistentVolumeClaim:
-        #     claimName: nest-volumeclaim
