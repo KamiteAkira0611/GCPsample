@@ -4,7 +4,7 @@ services:
   react:
     build:
       context: ./react
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     platform: linux/amd64
     ports:
       - "3000:3000"
@@ -13,8 +13,7 @@ services:
     tty: true
     depends_on:
       - nest
-    command: > 
-      bash -c "yarn install && yarn dev"
+    command: bash -c "yarn install && yarn dev"
 
   nest:
     build:
@@ -31,7 +30,10 @@ services:
       yarn prisma migrate deploy && 
       yarn start:dev"
     environment:
-      PRISMA_DATABASE_URL: mysql://root:prisma@mysql:3306/mydb?connect_timeout=300
+      PRISMA_DATABASE_NAME: mydb
+      PRISMA_DATABASE_HOST: mysql:3306
+      PRISMA_DATABASE_USER: root
+      PRISMA_DATABASE_PASSWORD: prisma
     depends_on:
       - mysql
     tty: true
