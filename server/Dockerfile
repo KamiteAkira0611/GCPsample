@@ -4,6 +4,7 @@ ENV NODE_ENV=production
 WORKDIR /app
 COPY . .
 
+RUN yarn cache clean
 RUN yarn global add @nestjs/cli
 RUN yarn install
 
