@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:prisma@mysql-db:3306/mydb?connect_timeout=300"
+  url      = env("PRISMA_DATABASE_URL")
 }
 
 generator client {

@@ -1,14 +1,16 @@
 steps:
+  substitutions:
+    FRONT_IMAGE_PATH: asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/front-image
+    SERVER_IMAGE_PATH: asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/server-image
+
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/front-image', '-f', './front/Dockerfile', './front' ]
+    args: [ 'build', '-t', '${FRONT_IMAGE_PATH}', '-f', './front/Dockerfile', './front' ]
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/server-image', '-f', './server/Dockerfile', './server' ]
+    args: [ 'build', '-t', '${SERVER_IMAGE_PATH}', '-f', './server/Dockerfile', './server' ]
 
   # Docker Push To Container Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/front-image' ]
+    args: [ 'push', '${FRONT_IMAGE_PATH}' ]
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/server-image' ]
-
-  
+    args: [ 'push', '${SERVER_IMAGE_PATH}' ]

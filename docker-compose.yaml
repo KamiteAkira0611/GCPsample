@@ -29,6 +29,8 @@ services:
     command: > 
       bash -c "yarn install && 
       yarn start:dev"
+    environment:
+      PRISMA_DATABASE_URL: mysql://root:prisma@mysql-db:3306/mydb?connect_timeout=300
     depends_on:
       - mysql-db
     
