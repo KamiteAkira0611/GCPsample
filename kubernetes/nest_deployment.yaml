@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: nest
-          image: asia-northeast1-docker.pkg.dev/gke-sample-327813/layerdsample/nest-image:latest
           tty: true
+          image: asia-northeast1-docker.pkg.dev/gke-sample-327813/layerdsample/nest-image:latest
           env:
             - name: PRISMA_DATABASE_HOST
               value: 127.0.0.1:3306
@@ -33,6 +33,8 @@ spec:
                 secretKeyRef:
                   name: cloudsql-db-credentials
                   key: password
+          command: 
+            - rm -rf yarn.lock
           ports:
             - containerPort: 5000
         - name: cloudsql-proxy
