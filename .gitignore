@@ -35,3 +35,9 @@ server/lerna-debug.log*
 
 # ------- mysql -------
 mysql/data
+
+
+# ------- GCP -------
+cloudsql-account-key.json
+samples/wordpress-persistent-disks/key.json
+samples/wordpress-persistent-disks/wordpress_cloudsql.yaml

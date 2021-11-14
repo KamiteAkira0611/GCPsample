@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nest
+  labels:
+    app: nest
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nest
+  template:
+    metadata:
+      labels:
+        app: nest
+    spec:
+      containers:
+        - name: nest
+          image: asia-northeast1-docker.pkg.dev/$PROJECT_ID/layerdsample/server-image
+          env:
+          - name: NEST_DB_HOST
+            value: 127.0.0.1:3306
+          # These secrets are required to start the pod.
+          - name: NEST_DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: cloudsql-db-credentials
+                key: username
+          - name: NEST_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: cloudsql-db-credentials
+                key: password
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: nest-persistent-storage
+              mountPath: /app
+      volumes:
+        - name: nest-persistent-storage
+          persistentVolumeClaim:
+            claimName: nest-volumeclaim
