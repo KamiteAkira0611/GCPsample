@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    app: layerd-sample
+    tier: backend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 5000
+  selector:
+    app: layerd-sample
+    tier: backend

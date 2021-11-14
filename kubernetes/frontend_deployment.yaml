@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: layerd-sample
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: layerd-sample
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: layerd-sample
+        tier: frontend
+    spec:
+      containers:
+      - name: react
+        image: asia-northeast1-docker.pkg.dev/gke-sample-327813/layerdsample/react-image:latest
+        env:
+        - name: REACT_APP_API_URL
+          value: http://10.124.2.79:5000
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        ports:
+        - containerPort: 3000
